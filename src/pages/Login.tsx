@@ -4,20 +4,24 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, Lock, ArrowLeft } from "lucide-react";
 
 const Login = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // This would be replaced with actual authentication logic
     toast({
-      title: "Login Attempted",
-      description: "This would connect to your authentication service",
+      title: "Login Successful",
+      description: "Welcome back to XpenseS!",
     });
+    
+    // Navigate to the dashboard after successful login
+    navigate('/dashboard');
   };
 
   const handleGoogleLogin = () => {
@@ -25,6 +29,9 @@ const Login = () => {
       title: "Google Login",
       description: "This would integrate with Google authentication",
     });
+    
+    // Navigate to the dashboard after Google login
+    navigate('/dashboard');
   };
 
   const handleForgotPassword = () => {

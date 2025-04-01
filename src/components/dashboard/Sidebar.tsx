@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { PieChart, BarChart, CreditCard, Wallet, Calendar, Activity, UserCog, Users, Settings } from 'lucide-react';
+import { PieChart, BarChart, CreditCard, Wallet, Activity, UserCog, Users, Settings } from 'lucide-react';
 
 const Sidebar = () => {
   // In a real application, this would come from an authentication context
@@ -12,7 +12,6 @@ const Sidebar = () => {
     { name: 'Transactions', path: '/transactions', icon: CreditCard, roles: ['user', 'admin', 'super-admin'] },
     { name: 'Budget', path: '/budget', icon: Wallet, roles: ['user', 'admin', 'super-admin'] },
     { name: 'Reports', path: '/reports', icon: BarChart, roles: ['user', 'admin', 'super-admin'] },
-    { name: 'Calendar', path: '/calendar', icon: Calendar, roles: ['user', 'admin', 'super-admin'] },
     { name: 'Activity', path: '/activity', icon: Activity, roles: ['user', 'admin', 'super-admin'] },
     { name: 'Admin Dashboard', path: '/admin', icon: UserCog, roles: ['admin', 'super-admin'] },
     { name: 'User Management', path: '/admin/users', icon: Users, roles: ['admin', 'super-admin'] },
@@ -55,8 +54,8 @@ const Sidebar = () => {
             <div className="bg-primary h-full w-3/4"></div>
           </div>
           <div className="mt-2 flex justify-between text-xs text-gray-500">
-            <span>$3,240 spent</span>
-            <span>$4,000 budget</span>
+            <span>रू3,240 spent</span>
+            <span>रू4,000 budget</span>
           </div>
         </div>
       </div>

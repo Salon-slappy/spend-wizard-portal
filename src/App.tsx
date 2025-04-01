@@ -14,7 +14,6 @@ import NotFound from "./pages/NotFound";
 import Transactions from "./pages/Transactions";
 import Budget from "./pages/Budget";
 import Reports from "./pages/Reports";
-import Calendar from "./pages/Calendar";
 import Activity from "./pages/Activity";
 import AdminUsers from "./pages/AdminUsers";
 import AdminSettings from "./pages/AdminSettings";
@@ -36,12 +35,11 @@ const App = () => (
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/budget" element={<Budget />} />
           <Route path="/reports" element={<Reports />} />
-          <Route path="/calendar" element={<Calendar />} />
           <Route path="/activity" element={<Activity />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/users" element={<AdminUsers />} />
           <Route path="/admin/settings" element={<AdminSettings />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          {/* Removed Calendar route */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

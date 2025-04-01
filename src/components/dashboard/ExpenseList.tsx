@@ -121,7 +121,7 @@ const ExpenseList: React.FC = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <span className="text-sm font-medium text-red-500">
-                  -${expense.amount.toFixed(2)}
+                  -रू{expense.amount.toFixed(2)}
                 </span>
                 <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={() => handleEditClick(expense)}>
                   <Edit className="h-4 w-4" />
@@ -160,7 +160,7 @@ const ExpenseList: React.FC = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="amount">Amount ($)</Label>
+              <Label htmlFor="amount">Amount (रू)</Label>
               <Input 
                 id="amount" 
                 type="number"

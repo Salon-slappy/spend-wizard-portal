@@ -60,9 +60,9 @@ const Reports: React.FC = () => {
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={monthlyData}>
                       <XAxis dataKey="name" />
-                      <YAxis format={(value) => `$${value}`} />
+                      <YAxis tickFormatter={(value) => `रू${value}`} />
                       <Tooltip 
-                        formatter={(value) => [`$${value}`, '']}
+                        formatter={(value) => [`रू${value}`, '']}
                         contentStyle={{ 
                           borderRadius: '8px', 
                           border: 'none', 
@@ -103,7 +103,7 @@ const Reports: React.FC = () => {
                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                           ))}
                         </Pie>
-                        <Tooltip formatter={(value) => [`$${value}`, '']} />
+                        <Tooltip formatter={(value) => [`रू${value}`, '']} />
                       </PieChart>
                     </ResponsiveContainer>
                   </div>
@@ -118,7 +118,7 @@ const Reports: React.FC = () => {
                             ></span>
                             <span className="text-sm font-medium">{item.name}</span>
                           </div>
-                          <span className="text-sm">${item.value}</span>
+                          <span className="text-sm">रू{item.value}</span>
                         </div>
                         <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
                           <div 
@@ -147,19 +147,19 @@ const Reports: React.FC = () => {
                   <div className="space-y-4">
                     <div className="flex justify-between py-2 border-b">
                       <span className="font-medium">Total Income</span>
-                      <span className="text-green-600">$19,560</span>
+                      <span className="text-green-600">रू19,560</span>
                     </div>
                     <div className="flex justify-between py-2 border-b">
                       <span className="font-medium">Total Expenses</span>
-                      <span className="text-red-600">$16,306</span>
+                      <span className="text-red-600">रू16,306</span>
                     </div>
                     <div className="flex justify-between py-2 border-b">
                       <span className="font-medium">Net Savings</span>
-                      <span className="text-primary">$3,254</span>
+                      <span className="text-primary">रू3,254</span>
                     </div>
                     <div className="flex justify-between py-2 border-b">
                       <span className="font-medium">Largest Expense</span>
-                      <span>Housing ($1,200)</span>
+                      <span>Housing (रू1,200)</span>
                     </div>
                     <div className="flex justify-between py-2">
                       <span className="font-medium">Savings Rate</span>

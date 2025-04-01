@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 
 interface ExpenseChartProps {
   data?: {
@@ -48,7 +48,7 @@ const ExpenseChart: React.FC<ExpenseChartProps> = ({
                   ))}
                 </Pie>
                 <Tooltip
-                  formatter={(value) => [`$${value}`, 'Expense']}
+                  formatter={(value) => [`रू${value}`, 'Expense']}
                   labelFormatter={() => ''}
                 />
               </PieChart>
@@ -64,7 +64,7 @@ const ExpenseChart: React.FC<ExpenseChartProps> = ({
                     <span className="text-sm">{item.name}</span>
                   </div>
                   <div className="text-sm font-medium">
-                    ${item.value}
+                    रू{item.value}
                     <span className="ml-1 text-xs text-muted-foreground">
                       ({Math.round((item.value / total) * 100)}%)
                     </span>
