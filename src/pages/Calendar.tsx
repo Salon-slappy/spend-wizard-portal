@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 import { format, isSameDay } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 import { Plus, CalendarIcon } from 'lucide-react';
@@ -133,18 +132,12 @@ const Calendar: React.FC = () => {
     return events.filter(event => isSameDay(new Date(event.date), date));
   };
 
-  // Function to add a class based on the type of event
-  const getDayClass = (date: Date) => {
-    const eventsOnDay = events.filter(event => isSameDay(new Date(event.date), date));
-    if (eventsOnDay.length > 0) {
-      if (eventsOnDay.some(e => e.type === 'income')) return 'bg-green-100 text-green-800 font-bold';
-      if (eventsOnDay.some(e => e.type === 'expense')) return 'bg-red-100 text-red-800 font-bold';
-      if (eventsOnDay.some(e => e.type === 'bill')) return 'bg-orange-100 text-orange-800 font-bold';
-    }
-    return '';
-  };
-
   const selectedDateEvents = getEventsForDate(date);
+  
+  // Get current month and day
+  const currentMonth = format(date, 'MMMM');
+  const currentDay = format(date, 'd');
+  const currentYear = format(date, 'yyyy');
 
   return (
     <DashboardLayout>
@@ -168,40 +161,48 @@ const Calendar: React.FC = () => {
                 <CardTitle className="flex justify-between items-center">
                   <span>Calendar</span>
                   <span className="text-base font-normal text-muted-foreground">
-                    {format(date, 'MMMM yyyy')}
+                    {currentMonth} {currentYear}
                   </span>
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <CalendarComponent 
-                  mode="single"
-                  selected={date}
-                  onSelect={(newDate) => newDate && setDate(newDate)}
-                  className="rounded-md border"
-                  modifiers={{
-                    eventDay: (date) => getEventsForDate(date).length > 0
-                  }}
-                  modifiersClassNames={{
-                    eventDay: "font-bold"
-                  }}
-                  styles={{
-                    day: (date) => ({
-                      className: getDayClass(date)
-                    })
-                  }}
-                />
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <div className="flex items-center">
-                    <span className="w-3 h-3 bg-green-100 border border-green-400 rounded-full mr-1"></span>
-                    <span className="text-xs">Income</span>
+                <div className="text-center p-6">
+                  <CalendarIcon className="mx-auto h-16 w-16 text-muted-foreground mb-4" />
+                  <h2 className="text-2xl font-bold mb-1">{currentDay}</h2>
+                  <p className="text-lg text-muted-foreground">{currentMonth} {currentYear}</p>
+                  
+                  <div className="grid grid-cols-3 gap-2 mt-6 mb-4">
+                    {Array.from({ length: 9 }).map((_, i) => {
+                      const dayNum = i - 3 + parseInt(currentDay);
+                      return (
+                        <button
+                          key={i}
+                          className={`p-2 rounded-md ${i === 3 ? 'bg-primary text-white' : 'hover:bg-gray-100'}`}
+                          onClick={() => {
+                            const newDate = new Date(date);
+                            newDate.setDate(dayNum);
+                            setDate(newDate);
+                          }}
+                        >
+                          {dayNum > 0 ? dayNum : ''}
+                        </button>
+                      );
+                    })}
                   </div>
-                  <div className="flex items-center">
-                    <span className="w-3 h-3 bg-red-100 border border-red-400 rounded-full mr-1"></span>
-                    <span className="text-xs">Expense</span>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="w-3 h-3 bg-orange-100 border border-orange-400 rounded-full mr-1"></span>
-                    <span className="text-xs">Bill</span>
+                  
+                  <div className="mt-4 flex flex-wrap gap-2 justify-center">
+                    <div className="flex items-center">
+                      <span className="w-3 h-3 bg-green-100 border border-green-400 rounded-full mr-1"></span>
+                      <span className="text-xs">Income</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span className="w-3 h-3 bg-red-100 border border-red-400 rounded-full mr-1"></span>
+                      <span className="text-xs">Expense</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span className="w-3 h-3 bg-orange-100 border border-orange-400 rounded-full mr-1"></span>
+                      <span className="text-xs">Bill</span>
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -304,11 +305,14 @@ const Calendar: React.FC = () => {
             </div>
             <div className="space-y-2">
               <Label htmlFor="date">Date</Label>
-              <CalendarComponent
-                mode="single"
-                selected={currentEvent?.date}
-                onSelect={(date) => setCurrentEvent(curr => curr ? {...curr, date: date || new Date()} : null)}
-                className="border rounded-md p-3"
+              <Input
+                type="date"
+                id="date"
+                value={format(currentEvent?.date || new Date(), 'yyyy-MM-dd')}
+                onChange={(e) => {
+                  const newDate = e.target.value ? new Date(e.target.value) : new Date();
+                  setCurrentEvent(curr => curr ? {...curr, date: newDate} : null);
+                }}
               />
             </div>
             <div className="space-y-2">

@@ -1,23 +1,13 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calendar';
-import { format } from 'date-fns';
-import { CalendarIcon, Download } from 'lucide-react';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import { cn } from '@/lib/utils';
+import { Download } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const Reports: React.FC = () => {
-  const [range, setRange] = useState<{from?: Date; to?: Date}>({from: undefined, to: undefined});
-  
   // Sample data
   const monthlyData = [
     { name: 'Jan', income: 4000, expense: 2400 },
@@ -47,33 +37,6 @@ const Reports: React.FC = () => {
             <p className="text-muted-foreground">Analyze your financial data</p>
           </div>
           <div className="mt-4 sm:mt-0 flex space-x-2">
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button variant="outline" className="w-[250px] justify-start">
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {range.from ? (
-                    range.to ? (
-                      <>
-                        {format(range.from, "LLL dd, y")} - {format(range.to, "LLL dd, y")}
-                      </>
-                    ) : (
-                      format(range.from, "LLL dd, y")
-                    )
-                  ) : (
-                    <span>Select date range</span>
-                  )}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                  mode="range"
-                  selected={range}
-                  onSelect={setRange}
-                  initialFocus
-                  className={cn("p-3 pointer-events-auto")}
-                />
-              </PopoverContent>
-            </Popover>
             <Button>
               <Download className="h-4 w-4 mr-2" /> Export Report
             </Button>
@@ -97,7 +60,7 @@ const Reports: React.FC = () => {
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={monthlyData}>
                       <XAxis dataKey="name" />
-                      <YAxis formatter={(value) => `$${value}`} />
+                      <YAxis format={(value) => `$${value}`} />
                       <Tooltip 
                         formatter={(value) => [`$${value}`, '']}
                         contentStyle={{ 

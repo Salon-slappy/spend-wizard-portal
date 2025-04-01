@@ -7,15 +7,8 @@ import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
-import { CalendarIcon, Trash2, PenLine, Plus, Search, Download } from 'lucide-react';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import { cn } from '@/lib/utils';
+import { Trash2, PenLine, Plus, Search, Download } from 'lucide-react';
 
 interface Transaction {
   id: string;
@@ -290,29 +283,15 @@ const Transactions: React.FC = () => {
             </div>
             <div className="space-y-2">
               <Label htmlFor="date">Date</Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant={"outline"}
-                    className={cn(
-                      "w-full justify-start text-left font-normal",
-                      !currentTransaction?.date && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {currentTransaction?.date ? format(currentTransaction.date, 'PPP') : <span>Pick a date</span>}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={currentTransaction?.date}
-                    onSelect={(date) => setCurrentTransaction(curr => curr ? {...curr, date: date || new Date()} : null)}
-                    initialFocus
-                    className={cn("p-3 pointer-events-auto")}
-                  />
-                </PopoverContent>
-              </Popover>
+              <Input
+                type="date"
+                id="date"
+                value={format(currentTransaction?.date || new Date(), 'yyyy-MM-dd')}
+                onChange={(e) => {
+                  const newDate = e.target.value ? new Date(e.target.value) : new Date();
+                  setCurrentTransaction(curr => curr ? {...curr, date: newDate} : null);
+                }}
+              />
             </div>
             <DialogFooter>
               <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>Cancel</Button>
