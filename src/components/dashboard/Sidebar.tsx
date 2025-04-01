@@ -1,26 +1,35 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { PieChart, BarChart, CreditCard, Wallet, Calendar, Activity } from 'lucide-react';
+import { PieChart, BarChart, CreditCard, Wallet, Calendar, Activity, UserCog, Users, Settings } from 'lucide-react';
 
 const Sidebar = () => {
+  // In a real application, this would come from an authentication context
+  const userRole = 'super-admin'; // Options: 'user', 'admin', 'super-admin'
+
   const navItems = [
-    { name: 'Overview', path: '/', icon: PieChart },
-    { name: 'Transactions', path: '/transactions', icon: CreditCard },
-    { name: 'Budget', path: '/budget', icon: Wallet },
-    { name: 'Reports', path: '/reports', icon: BarChart },
-    { name: 'Calendar', path: '/calendar', icon: Calendar },
-    { name: 'Activity', path: '/activity', icon: Activity },
+    { name: 'Dashboard', path: '/dashboard', icon: PieChart, roles: ['user', 'admin', 'super-admin'] },
+    { name: 'Transactions', path: '/transactions', icon: CreditCard, roles: ['user', 'admin', 'super-admin'] },
+    { name: 'Budget', path: '/budget', icon: Wallet, roles: ['user', 'admin', 'super-admin'] },
+    { name: 'Reports', path: '/reports', icon: BarChart, roles: ['user', 'admin', 'super-admin'] },
+    { name: 'Calendar', path: '/calendar', icon: Calendar, roles: ['user', 'admin', 'super-admin'] },
+    { name: 'Activity', path: '/activity', icon: Activity, roles: ['user', 'admin', 'super-admin'] },
+    { name: 'Admin Dashboard', path: '/admin', icon: UserCog, roles: ['admin', 'super-admin'] },
+    { name: 'User Management', path: '/admin/users', icon: Users, roles: ['admin', 'super-admin'] },
+    { name: 'System Settings', path: '/admin/settings', icon: Settings, roles: ['super-admin'] },
   ];
+
+  // Filter nav items based on user role
+  const filteredNavItems = navItems.filter(item => item.roles.includes(userRole));
 
   return (
     <aside className="w-full md:w-64 bg-white border-r border-gray-200">
       <div className="p-4 border-b border-gray-200">
-        <h2 className="text-2xl font-bold text-primary">Expense Tracker</h2>
+        <h2 className="text-2xl font-bold text-primary">XpenseS</h2>
       </div>
       <nav className="p-2">
         <ul className="space-y-1">
-          {navItems.map((item) => (
+          {filteredNavItems.map((item) => (
             <li key={item.path}>
               <NavLink 
                 to={item.path} 
